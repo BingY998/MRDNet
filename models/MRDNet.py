@@ -329,9 +329,9 @@ class MRDNet(nn.Module):
         ])
 
         self.FAM1 = FAM(base_channel * 4)
-        self.SFE1 = SFE(base_channel * 4)
+        self.SCM1 = SFE(base_channel * 4)
         self.FAM2 = FAM(base_channel * 2)
-        self.SFE2 = SFE(base_channel * 2)
+        self.SCM2 = SFE(base_channel * 2)
 
     def forward(self, x):  # x是输入#4,3,256,256
 
@@ -339,8 +339,8 @@ class MRDNet(nn.Module):
         x_2 = F.interpolate(x, scale_factor=0.5)  # 下采样，第二层#4,3,128,128
         x_4 = F.interpolate(x_2, scale_factor=0.5)  # 下采样，最小尺寸的，第三层#4,3,64,64
 
-        z2 = self.SFE2(x_2)  # 4,64,128,128----16,64,64,64
-        z4 = self.SFE1(x_4)  # 4,128,64,64----16,128,32,32
+        z2 = self.SCM2(x_2)  # 4,64,128,128----16,64,64,64
+        z4 = self.SCM1(x_4)  # 4,128,64,64----16,128,32,32
 
         # '''加入小波变换'''
         # x1 = x
@@ -506,9 +506,9 @@ class MRDNetPlus(nn.Module):
         ])
 
         self.FAM1 = FAM(base_channel * 4)
-        self.SFE1 = SFE(base_channel * 4)
+        self.SCM1 = SFE(base_channel * 4)
         self.FAM2 = FAM(base_channel * 2)
-        self.SFE2 = SFE(base_channel * 2)
+        self.SCM2 = SFE(base_channel * 2)
 
     def forward(self, x):  # x是输入#4,3,256,256
 
@@ -516,8 +516,8 @@ class MRDNetPlus(nn.Module):
         x_2 = F.interpolate(x, scale_factor=0.5)  # 下采样，第二层#4,3,128,128
         x_4 = F.interpolate(x_2, scale_factor=0.5)  # 下采样，最小尺寸的，第三层#4,3,64,64
 
-        z2 = self.SFE2(x_2)  # 4,64,128,128----16,64,64,64
-        z4 = self.SFE1(x_4)  # 4,128,64,64----16,128,32,32
+        z2 = self.SCM2(x_2)  # 4,64,128,128----16,64,64,64
+        z4 = self.SCM1(x_4)  # 4,128,64,64----16,128,32,32
 
         # '''加入小波变换'''
         # x1 = x
